@@ -112,6 +112,20 @@ $ source activate
 ```
 
 ## Enable GPU support
+We will add the following commands to the .bashrc file, assuming CUDA is installed in *///usr/local/cuda*.
+> Note: Deactivate the virtual environment before completing this section
+
+> Note: We will use gksu to edit .bashrc. (sudo apt-get install gksu)
+
+* Navigate to .bashrc: </br>
+```
+$ gksu gedit ~/.bashrc
+```
+* Add the following items to the .bashrc: </br>
+```
+export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:/usr/local/cuda/lib64:/usr/local/cuda/extras/CUPTI/lib64"
+export CUDA_HOME=/usr/local/cuda
+```
 
 ## Sources:
 NVIDIA TensorFlow CUDA Installation Instructions. http://www.nvidia.com/object/gpu-accelerated-applications-tensorflow-installation.html#sthash.oP4cRwjF.dpuf
