@@ -133,4 +133,5 @@ To test the TensorFlow installation, run the sample code included in the *~/Code
 
 
 ## Sources:
-NVIDIA TensorFlow CUDA Installation Instructions. http://www.nvidia.com/object/gpu-accelerated-applications-tensorflow-installation.html#sthash.oP4cRwjF.dpuf
+* TensorFlow Getting Started Guide. https://www.tensorflow.org/versions/r0.11/get_started/os_setup.html#download-and-setup
+* NVIDIA TensorFlow CUDA Installation Instructions. http://www.nvidia.com/object/gpu-accelerated-applications-tensorflow-installation.html#sthash.oP4cRwjF.dpuf
