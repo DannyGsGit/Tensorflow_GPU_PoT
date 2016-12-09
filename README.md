@@ -127,5 +127,10 @@ export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:/usr/local/cuda/lib64:/usr/local/cuda/e
 export CUDA_HOME=/usr/local/cuda
 ```
 
+## Test TensorFlow
+To test the TensorFlow installation, run the sample code included in the *~/Code/tensorflow_test.py* script in this repository from Rodeo IDE (running inside the venv) or manually executing the script from within the venv.
+
+
+
 ## Sources:
 NVIDIA TensorFlow CUDA Installation Instructions. http://www.nvidia.com/object/gpu-accelerated-applications-tensorflow-installation.html#sthash.oP4cRwjF.dpuf
