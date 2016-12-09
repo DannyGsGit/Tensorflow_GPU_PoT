@@ -74,4 +74,21 @@ $ sudo dpkg -i install rodeo.deb
 * When starting up Rodeo for the first time, you may encounter errors. Ignore the error message and click "Skip Startup"
 * Inside Rodeo, navigate to *Rodeo > Preferences > Python* and set the *Python Path* to the python3 file in your virtual environment's `/bin` subdirectory.
 
+## Install CUDA Toolkit
+
+> TensorFlow requires an NVIDIA GPU with compute capability >3.0 per NVIDIA's compute table: https://developer.nvidia.com/cuda-gpus
+
+In order to run TensorFlow, we must install CUDA Toolkit V7.0 (or later) and cuDNN 3.0 (or later). The packages are available here: https://developer.nvidia.com/cuda-downloads.
+
+> Note that the CUDA installation is done at the system level, not inside the virutal environment.
+
+* For this example, we download the .deb CUDA installer and place the file in the */usr/local/cuda* directory.
+* In the terminal, navigate to the */usr/local/cuda* directory and execute the following commands to install: </br>
+```
+sudo dpkg -i cuda-repo-ubuntu1404-8-0-local_8.0.44-1_amd64.deb
+sudo apt-get update
+sudo apt-get install cuda
+```
+
+
 ## Install TensorFlow GPU Configuration
