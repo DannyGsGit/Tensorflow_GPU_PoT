@@ -1,0 +1,97 @@
+import tensorflow as tf
+
+
+#~~~~~~~~~~~~~~~~~
+#### Get data ####
+#~~~~~~~~~~~~~~~~~
+
+# Import the MNIST dataset from tensorflow. Dataset contains three splits: train, test, validation
+from tensorflow.examples.tutorials.mnist import input_data
+mnist = input_data.read_data_sets("MNIST_data/", one_hot = True)
+
+# Sample image:
+# mnist.train.images[1,]
+# mnist.train.labels[1,]
+
+
+
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#### Softmax Regression ####
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+# An image placeholder for tensorflow. 784 is the dimensionality of the images, 
+# None means a floating dimension.
+x = tf.placeholder(tf.float32, [None, 784])  
+
+
+# Define weights and biases for our Softmax model.
+# Note that variables can be both used and modified by computation. Variables are typically used for ML parameters.
+W = tf.Variable(tf.zeros([784, 10]))  # Dimension 10 reflects our 10 possible classes (digits 0-9).
+b = tf.Variable(tf.zeros([10]))
+
+
+# Define the softmax model. The vectorized form of the softmax is:
+# y = softmax(Wx + b)
+# where softmax(x) = normalize(exp(x))
+y = tf.nn.softmax(tf.matmul(x, W) + b)
+
+
+
+#~~~~~~~~~~~~~~~~~~~~~~~~
+#### Train the model ####
+#~~~~~~~~~~~~~~~~~~~~~~~~
+
+# Define the cost function using cross-entropy
+# Hy'(y) = - sum(y'i * log(yi))
+# Where y is the prediction and y' is the true label.
+
+# Create a placeholder for y' (y_ in code), to contain labels for training data
+y_ = tf.placeholder(tf.float32, [None, 10])
+
+# Define cross-entropy COST FUNCTION. The reduce_sum function sums the elements of y in dimension [1] (set by reduction_indices)
+# and we get mean error using reduce_mean.
+cross_entropy = tf.reduce_mean(-tf.reduce_sum(y_ * tf.log(y), reduction_indices= [1]))
+
+# From tensorflow doc:
+# (Note that in the source code, we don't use this formulation, because it is numerically unstable. 
+# Instead, we apply tf.nn.softmax_cross_entropy_with_logits on the unnormalized logits (e.g., we 
+# call softmax_cross_entropy_with_logits on tf.matmul(x, W) + b), because this more numerically stable 
+# function internally computes the softmax activation. In your code, consider using 
+# tf.nn.(sparse_)softmax_cross_entropy_with_logits instead).
+
+# Define the optimizer, or OBJECTIVE FUNCTION to minimize our cost function. More options at:
+# https://www.tensorflow.org/api_docs/python/train/#optimizers
+train_step = tf.train.GradientDescentOptimizer(0.5).minimize(cross_entropy)
+
+# Initialize variables
+init = tf.global_variables_initializer()
+
+# Start a session
+sess = tf.Session()
+sess.run(init)
+
+# EXECUTE!
+# Train 1000 iterations. For each iteration:
+# 1- Get a batch of 100 random samples from the training set. 100 is arbitrary, small to reduce computation.
+# 2- Feed batches to train_step
+for i in range(1000):
+    batch_xs, batch_ys = mnist.train.next_batch(200)
+    sess.run(train_step, feed_dict = {x: batch_xs, y_: batch_ys})
+
+
+
+#~~~~~~~~~~~~~~~~~~~~~~~~~
+#### Model Evaluation ####
+#~~~~~~~~~~~~~~~~~~~~~~~~~
+
+# Get validation matrix
+correct_prediction = tf.equal(tf.arg_max(y, 1), tf.arg_max(y_, 1))
+
+# Calculate accuracy
+accuracy = tf.reduce_mean(tf.cast(correct_prediction, tf.float32))
+
+# Run the prediction on our test data
+print(sess.run(accuracy, feed_dict= {x: mnist.test.images, y_: mnist.test.labels}))
+
+
+# End
